@@ -1,0 +1,11 @@
+.task-card {
+  width: 350px;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.task-card-hovered {
+  background-color: #EDEEF8 !important;
+  cursor: pointer;
+}
