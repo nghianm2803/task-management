@@ -111,7 +111,13 @@ const TaskList = () => {
             }}
           >
             <CardContent sx={{ display: "flex", alignItems: "center" }}>
-              <AiOutlineFile />
+              <AiOutlineFile
+                style={{
+                  color: "#3F51B5",
+                  paddingRight: "5px",
+                  fontSize: "25px",
+                }}
+              />
               <Typography variant="body1" align="left" color="#637381">
                 To Do
               </Typography>
@@ -138,7 +144,7 @@ const TaskList = () => {
             }}
             onClick={handleTaskClick}
           >
-            <AiFillPlusCircle />
+            <AiFillPlusCircle fontSize="large" style={{ color: "#212B36" }} />
             <Typography variant="body2" align="center" color="#212B36">
               Task
             </Typography>
@@ -192,7 +198,13 @@ const TaskList = () => {
             }}
           >
             <CardContent sx={{ display: "flex", alignItems: "center" }}>
-              <AiOutlineFileText />
+              <AiOutlineFileText
+                style={{
+                  color: "#F1C93B",
+                  paddingRight: "5px",
+                  fontSize: "25px",
+                }}
+              />
               <Typography variant="body1" align="left" color="#637381">
                 In Progress
               </Typography>
@@ -200,7 +212,12 @@ const TaskList = () => {
           </Card>
 
           <Box sx={{ width: "100%", borderRadius: "8px" }}>
-            {/** List items here */}
+            {displayedBooks.length > 0 &&
+              renderTaskCards(
+                displayedBooks.filter(
+                  (task) => task.status === TaskStatus.IN_PROGRESS
+                )
+              )}
           </Box>
         </Box>
 
@@ -216,7 +233,13 @@ const TaskList = () => {
             }}
           >
             <CardContent sx={{ display: "flex", alignItems: "center" }}>
-              <AiOutlineFileDone />
+              <AiOutlineFileDone
+                style={{
+                  color: "#8BC34A",
+                  paddingRight: "5px",
+                  fontSize: "25px",
+                }}
+              />
               <Typography variant="body1" align="left" color="#637381">
                 Done
               </Typography>
@@ -224,7 +247,10 @@ const TaskList = () => {
           </Card>
 
           <Box sx={{ width: "100%", borderRadius: "8px" }}>
-            {/** List items here */}
+            {displayedBooks.length > 0 &&
+              renderTaskCards(
+                displayedBooks.filter((task) => task.status === TaskStatus.DONE)
+              )}
           </Box>
         </Box>
       </Stack>
