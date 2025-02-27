@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Typography, Box, Card, Stack } from "@mui/material";
-import "./taskstyle.css";
 import { fDate } from "../../utils/formatTime";
-// import TaskDetail from "./TaskDetail";
+import TaskDetail from "./TaskDetail";
 import { ITask } from "@/interface/task.model";
+import { ColorsBase } from "@/theme/colorBase";
 
 const TaskCard: React.FC<{ task: ITask }> = ({ task }) => {
   const [showDetail, setShowDetail] = useState(false);
@@ -21,9 +21,9 @@ const TaskCard: React.FC<{ task: ITask }> = ({ task }) => {
     setShowDetail(!showDetail);
   };
 
-  // const handleCloseForm = () => {
-  //   setShowDetail(false);
-  // };
+  const handleCloseForm = () => {
+    setShowDetail(false);
+  };
 
   return (
     <>
@@ -34,7 +34,6 @@ const TaskCard: React.FC<{ task: ITask }> = ({ task }) => {
         }}
       >
         <Card
-          className={isHovered ? "task-card-hovered" : "task-card"}
           sx={{
             p: 1,
             width: "100%",
@@ -43,13 +42,13 @@ const TaskCard: React.FC<{ task: ITask }> = ({ task }) => {
             position: "relative",
             overflow: "hidden",
             marginBottom: "10px",
-            backgroundColor: "#FFF",
+            backgroundColor: isHovered ? ColorsBase.green25 : ColorsBase.white,
           }}
           onMouseEnter={handleHover}
           onMouseLeave={handleLeave}
           onClick={handleTaskClick}
         >
-          <Typography sx={styleTypo} variant="h6">
+          <Typography sx={styleTypoTitle} variant="h3">
             {task.name}
           </Typography>
           <Box
@@ -75,10 +74,20 @@ const TaskCard: React.FC<{ task: ITask }> = ({ task }) => {
             </Typography>
           </Box>
         </Card>
-        {/* {showDetail && <TaskDetail task={task} onClose={handleCloseForm} />} */}
+        {showDetail && <TaskDetail task={task} onClose={handleCloseForm} />}
       </Box>
     </>
   );
+};
+
+const styleTypoTitle = {
+  fontWeight: "500px",
+  fontSize: "16px",
+  lineHeight: "20px",
+  letterSpace: "0px",
+  wordBreak: "break-word",
+  cursor: "pointer",
+  color: ColorsBase.gray900,
 };
 
 const styleTypo = {

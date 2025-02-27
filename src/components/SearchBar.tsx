@@ -1,38 +1,67 @@
-import React, { FormEvent, useState } from 'react'
-import { AiOutlineSearch } from 'react-icons/ai'
+import { ColorsBase } from "@/theme/colorBase";
+import { Box, Button, TextField } from "@mui/material";
+import React, { FormEvent, useState } from "react";
+import { AiOutlineSearch } from "react-icons/ai";
 
 interface SearchBarProps {
-  onSearch: (query: string) => void
+  onSearch: (query: string) => void;
 }
 
 function SearchBar({ onSearch }: SearchBarProps) {
-  const [searchQuery, setSearchQuery] = useState<string>('')
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
   const handleSearch = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    onSearch(searchQuery)
-  }
+    e.preventDefault();
+    onSearch(searchQuery);
+  };
 
   return (
-    <div className="flex justify-between">
-      <form id="searchForm" onSubmit={handleSearch}>
-        <input
-          className="outline-none box-border p-2 text-base rounded-l-lg border transition focus:border-gray-500 dark:bg-white"
-          type="search"
-          placeholder="Search books"
+    <Box display="flex" justifyContent="space-between" mt={4}>
+      <form
+        id="searchForm"
+        onSubmit={handleSearch}
+        style={{ display: "flex", width: "100%" }}
+      >
+        <TextField
+          fullWidth
+          variant="outlined"
+          placeholder="Task name"
           name="search"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
+          sx={{
+            maxWidth: "400px",
+            flexGrow: 1,
+            "& .MuiOutlinedInput-root": {
+              borderRadius: "8px 0 0 8px",
+              backgroundColor: ColorsBase.white,
+              transition: "border 0.2s",
+              "&:hover .MuiOutlinedInput-notchedOutline": {
+                borderColor: ColorsBase.gray300,
+              },
+              "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                borderColor: ColorsBase.gray500,
+              },
+            },
+          }}
         />
-        <button
+        <Button
           type="submit"
-          className="float-right px-3 py-3 mr-4 bg-gray-300 transition hover:bg-gray-400 border border-gray-400 rounded-r-lg cursor-pointer"
+          variant="contained"
+          sx={{
+            borderRadius: "0 8px 8px 0",
+            backgroundColor: ColorsBase.gray300,
+            color: "black",
+            "&:hover": { backgroundColor: ColorsBase.gray300 },
+            minWidth: "auto",
+            border: `1px solid ${ColorsBase.gray300}`,
+          }}
         >
-          <AiOutlineSearch />
-        </button>
+          <AiOutlineSearch size={20} />
+        </Button>
       </form>
-    </div>
-  )
+    </Box>
+  );
 }
 
-export default SearchBar
+export default SearchBar;

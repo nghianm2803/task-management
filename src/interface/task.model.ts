@@ -11,13 +11,13 @@ export interface ITask {
 }
 
 export enum TaskStatus {
-  TODO = "todo",
-  IN_PROGRESS = "in-progress",
-  DONE = "done",
+  TODO = "Todo",
+  IN_PROGRESS = "InProgress",
+  DONE = "Done",
 }
 
 export enum TaskPriority {
-  LOW = "low",
-  MEDIUM = "medium",
-  HIGH = "high",
+  LOW = "Low",
+  MEDIUM = "Medium",
+  HIGH = "High",
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { fDeadline } from "../../utils/formatTime";
@@ -11,7 +11,6 @@ import {
   Container,
 } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
-import "./taskstyle.css";
 import {
   AiFillPlusCircle,
   AiOutlineFile,
@@ -23,13 +22,15 @@ import FTextField from "@/components/form/FTextField";
 import { ITask, TaskPriority, TaskStatus } from "@/interface/task.model";
 import { useTaskContext } from "@/contexts/taskContext";
 import TaskCard from "./TaskCard";
+import { ColorsBase } from "@/theme/colorBase";
+import SearchBar from "@/components/SearchBar";
 
 const TaskList = () => {
-  const { tasks, filteredTasks, addTask } = useTaskContext();
-
-  const displayedBooks = filteredTasks || tasks;
+  const { tasks, filteredTasks, addTask, searchTasks } = useTaskContext();
+  const displayedTasks = filteredTasks || tasks;
 
   const [showForm, setShowForm] = useState(false);
+  const [filterBy, setFilterBy] = useState("");
 
   const currentDateTime = fDeadline(new Date().toISOString());
 
@@ -65,10 +66,9 @@ const TaskList = () => {
   } = methods;
 
   const onSubmit = (data: { name: string; description: string }) => {
-    // use uuid for unique id
-    const bookId = Math.floor(Math.random() * 1000);
+    const taskId = Math.floor(Math.random() * 1000);
     const newTask: ITask = {
-      id: bookId,
+      id: taskId,
       name: data.name,
       description: data.description,
       status: TaskStatus.TODO,
@@ -76,7 +76,7 @@ const TaskList = () => {
       deadline: currentDateTime,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
-      assignTo: "",
+      assignTo: "Unassigned",
     };
 
     addTask(newTask);
@@ -84,15 +84,23 @@ const TaskList = () => {
   };
 
   const renderTaskCards = (tasks: Array<ITask>) => {
-    return tasks.map((task: ITask, index: number) => (
-      <React.Fragment key={index}>
+    return tasks.map((task: ITask) => (
+      <React.Fragment key={task.id}>
         <TaskCard task={task} />
       </React.Fragment>
     ));
   };
 
+  const handleSearch = (query: string) => {
+    searchTasks(query);
+  };
+
   return (
     <Container>
+      <Box mb={5} mr={1}>
+        <SearchBar onSearch={handleSearch} />
+      </Box>
+      <Box mb={5}>{/* FilterTask component */}</Box>
       <Stack
         direction="row"
         spacing={2}
@@ -108,26 +116,33 @@ const TaskList = () => {
               display: "flex",
               alignItems: "center",
               mb: "10px",
+              backgroundColor: ColorsBase.blue100,
             }}
           >
-            <CardContent sx={{ display: "flex", alignItems: "center" }}>
+            <CardContent
+              sx={{ mt: "6px", display: "flex", alignItems: "center" }}
+            >
               <AiOutlineFile
                 style={{
-                  color: "#3F51B5",
+                  color: ColorsBase.blue500,
                   paddingRight: "5px",
                   fontSize: "25px",
                 }}
               />
-              <Typography variant="body1" align="left" color="#637381">
+              <Typography
+                variant="body2"
+                align="left"
+                color={ColorsBase.blue500}
+              >
                 To Do
               </Typography>
             </CardContent>
           </Card>
 
           <Box sx={{ width: "100%", borderRadius: "8px" }}>
-            {displayedBooks.length > 0 &&
+            {displayedTasks.length > 0 &&
               renderTaskCards(
-                displayedBooks.filter((task) => task.status === TaskStatus.TODO)
+                displayedTasks.filter((task) => task.status === TaskStatus.TODO)
               )}
           </Box>
 
@@ -139,13 +154,16 @@ const TaskList = () => {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              backgroundColor: "#FFF",
               cursor: "pointer",
+              backgroundColor: ColorsBase.green500,
             }}
             onClick={handleTaskClick}
           >
-            <AiFillPlusCircle fontSize="large" style={{ color: "#212B36" }} />
-            <Typography variant="body2" align="center" color="#212B36">
+            <AiFillPlusCircle
+              fontSize="large"
+              style={{ color: ColorsBase.white, paddingRight: "5px" }}
+            />
+            <Typography variant="body2" align="center" color={ColorsBase.white}>
               Task
             </Typography>
           </Card>
@@ -177,6 +195,7 @@ const TaskList = () => {
                     variant="contained"
                     size="small"
                     loading={isSubmitting}
+                    color="success"
                   >
                     Create Task
                   </LoadingButton>
@@ -186,7 +205,6 @@ const TaskList = () => {
           )}
         </Box>
 
-        {/* In Progress Column */}
         <Box sx={{ flex: 1, minWidth: 300 }}>
           <Card
             sx={{
@@ -195,33 +213,39 @@ const TaskList = () => {
               display: "flex",
               alignItems: "center",
               mb: "10px",
+              backgroundColor: ColorsBase.yellow100,
             }}
           >
-            <CardContent sx={{ display: "flex", alignItems: "center" }}>
+            <CardContent
+              sx={{ mt: "6px", display: "flex", alignItems: "center" }}
+            >
               <AiOutlineFileText
                 style={{
-                  color: "#F1C93B",
+                  color: ColorsBase.yellow500,
                   paddingRight: "5px",
                   fontSize: "25px",
                 }}
               />
-              <Typography variant="body1" align="left" color="#637381">
+              <Typography
+                variant="body1"
+                align="left"
+                color={ColorsBase.yellow500}
+              >
                 In Progress
               </Typography>
             </CardContent>
           </Card>
 
           <Box sx={{ width: "100%", borderRadius: "8px" }}>
-            {displayedBooks.length > 0 &&
+            {displayedTasks.length > 0 &&
               renderTaskCards(
-                displayedBooks.filter(
+                displayedTasks.filter(
                   (task) => task.status === TaskStatus.IN_PROGRESS
                 )
               )}
           </Box>
         </Box>
 
-        {/* Done Column */}
         <Box sx={{ flex: 1, minWidth: 300 }}>
           <Card
             sx={{
@@ -230,26 +254,37 @@ const TaskList = () => {
               display: "flex",
               alignItems: "center",
               mb: "10px",
+              backgroundColor: ColorsBase.green100,
             }}
           >
-            <CardContent sx={{ display: "flex", alignItems: "center" }}>
+            <CardContent
+              sx={{
+                mt: "6px",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
               <AiOutlineFileDone
                 style={{
-                  color: "#8BC34A",
+                  color: ColorsBase.green500,
                   paddingRight: "5px",
                   fontSize: "25px",
                 }}
               />
-              <Typography variant="body1" align="left" color="#637381">
+              <Typography
+                variant="body1"
+                align="left"
+                color={ColorsBase.green500}
+              >
                 Done
               </Typography>
             </CardContent>
           </Card>
 
           <Box sx={{ width: "100%", borderRadius: "8px" }}>
-            {displayedBooks.length > 0 &&
+            {displayedTasks.length > 0 &&
               renderTaskCards(
-                displayedBooks.filter((task) => task.status === TaskStatus.DONE)
+                displayedTasks.filter((task) => task.status === TaskStatus.DONE)
               )}
           </Box>
         </Box>

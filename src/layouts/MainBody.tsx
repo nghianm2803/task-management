@@ -1,18 +1,17 @@
 "use client";
 
-import React from "react";
-import SearchBar from "@/components/SearchBar";
+import React, { JSX } from "react";
 import TaskList from "@/app/task/TaskList";
+import { useTaskContext } from "@/contexts/taskContext";
+import Toast from "@/app/task/Toast";
 
-function MainBody() {
-  const handleSearch = () => {};
+function MainBody(): JSX.Element {
+  const { showToast } = useTaskContext();
 
   return (
     <>
-      <div className="flex justify-between m-8 px-20 pt-8">
-        <SearchBar onSearch={handleSearch} />
-      </div>
       <TaskList />
+      {showToast && <Toast />}
     </>
   );
 }
