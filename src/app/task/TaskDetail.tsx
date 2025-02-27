@@ -19,11 +19,12 @@ import {
   AiOutlineFileDone,
   AiOutlineFileText,
 } from "react-icons/ai";
-
+import { toast } from "react-toastify";
 import { useTaskContext } from "@/contexts/taskContext";
 import { ITask, TaskPriority, TaskStatus } from "@/interface/task.model";
 import DeleteTask from "./DeleteTask";
 import { ColorsBase } from "@/theme/colorBase";
+import { getPriorityColor, getStatusColor } from "@/utils/helper";
 
 interface TaskDetailProps {
   onClose: () => void;
@@ -40,6 +41,9 @@ const TaskDetail = ({ task, onClose }: TaskDetailProps): JSX.Element => {
     field: keyof ITask,
     value: string | TaskStatus | TaskPriority
   ) => {
+    if (detailTask.status === TaskStatus.DONE)
+      return toast.error("Cannot edit a completed task");
+
     setDetailTask((prev) => ({
       ...prev,
       [field]: value,
@@ -68,32 +72,6 @@ const TaskDetail = ({ task, onClose }: TaskDetailProps): JSX.Element => {
     setOpenDeleteDialog(false);
   };
 
-  const getStatusColor = (status: TaskStatus): string => {
-    switch (status) {
-      case TaskStatus.TODO:
-        return ColorsBase.blue100;
-      case TaskStatus.IN_PROGRESS:
-        return ColorsBase.yellow100;
-      case TaskStatus.DONE:
-        return ColorsBase.green100;
-      default:
-        return ColorsBase.blue100;
-    }
-  };
-
-  const getPriorityColor = (priority: TaskPriority): string => {
-    switch (priority) {
-      case TaskPriority.LOW:
-        return ColorsBase.green200;
-      case TaskPriority.MEDIUM:
-        return ColorsBase.yellow200;
-      case TaskPriority.HIGH:
-        return ColorsBase.red200;
-      default:
-        return ColorsBase.green200;
-    }
-  };
-
   return (
     <Box
       sx={{
@@ -104,7 +82,7 @@ const TaskDetail = ({ task, onClose }: TaskDetailProps): JSX.Element => {
         borderRadius: "10px",
         border: "1px solid #E0E0E0",
         overflow: "hidden",
-        backgroundColor: ColorsBase.green50,
+        backgroundColor: ColorsBase.green25,
         zIndex: 1,
         width: {
           xs: "100%",

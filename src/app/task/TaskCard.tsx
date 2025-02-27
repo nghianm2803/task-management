@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { Typography, Box, Card, Stack } from "@mui/material";
 import { fDate } from "../../utils/formatTime";
 import TaskDetail from "./TaskDetail";
-import { ITask } from "@/interface/task.model";
+import { ITask, TaskPriority } from "@/interface/task.model";
 import { ColorsBase } from "@/theme/colorBase";
+import { getPriorityColor } from "@/utils/helper";
 
 const TaskCard: React.FC<{ task: ITask }> = ({ task }) => {
   const [showDetail, setShowDetail] = useState(false);
@@ -42,6 +43,9 @@ const TaskCard: React.FC<{ task: ITask }> = ({ task }) => {
             position: "relative",
             overflow: "hidden",
             marginBottom: "10px",
+            borderBottom: `2px solid ${getPriorityColor(
+              task.priority ?? TaskPriority.LOW
+            )}`,
             backgroundColor: isHovered ? ColorsBase.green25 : ColorsBase.white,
           }}
           onMouseEnter={handleHover}

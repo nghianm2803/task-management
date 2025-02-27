@@ -16,7 +16,7 @@ function SearchBar({ onSearch }: SearchBarProps) {
   };
 
   return (
-    <Box display="flex" justifyContent="space-between" mt={4}>
+    <Box sx={{ minWidth: 500 }}>
       <form
         id="searchForm"
         onSubmit={handleSearch}

@@ -11,18 +11,15 @@ import React, {
 import LoadingSkeleton from "../components/LoadingSkeleton";
 import { ITask } from "../interface/task.model";
 import { TASKS } from "../constant/task";
+import { toast } from "react-toastify";
 
 interface TaskContextProps {
   tasks: ITask[];
   addTask: (task: ITask) => void;
   editTask: (task: ITask) => void;
   deleteTask: (task: ITask) => void;
-  toastMessage: string;
-  setToastMessage: (message: string) => void;
-  showToast: boolean;
-  setShowToast: (show: boolean) => void;
-  closeToast: () => void;
   searchTasks: (query: string) => void;
+  filterTasks: (query: string) => void;
   filteredTasks: ITask[];
 }
 
@@ -39,30 +36,13 @@ export function useTaskContext(): TaskContextProps {
 export function TaskProvider({ children }: { children: React.ReactNode }) {
   const [tasks, setTasks] = useState<ITask[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [showToast, setShowToast] = useState<boolean>(false);
-  const [toastMessage, setToastMessage] = useState<string>("");
   const [filteredTasks, setFilteredTasks] = useState<ITask[]>([]);
-
-  const openToast = () => {
-    setShowToast(true);
-
-    setTimeout(() => {
-      setShowToast(false);
-    }, 1500);
-  };
-
-  const closeToast = () => {
-    setShowToast(false);
-    setToastMessage("");
-  };
 
   const addTask = useCallback(
     (newTask: ITask) => {
       const newTasks = [...tasks, newTask];
       setTasks(newTasks);
-      openToast();
-      const message = `Add task ${newTask.name} successful!`;
-      setToastMessage(message);
+      toast.success(`Add task ${newTask.name} successful!`);
 
       localStorage.setItem("tasks", JSON.stringify(newTasks));
     },
@@ -75,9 +55,7 @@ export function TaskProvider({ children }: { children: React.ReactNode }) {
         task.id === editedTask.id ? editedTask : task
       );
       setTasks(updatedTasks);
-      openToast();
-      const message = `Edit task ${editedTask.name} successful!`;
-      setToastMessage(message);
+      toast.success(`Edit task ${editedTask.name} successful!`);
 
       localStorage.setItem("tasks", JSON.stringify(updatedTasks));
     },
@@ -88,9 +66,7 @@ export function TaskProvider({ children }: { children: React.ReactNode }) {
     (taskToDelete: ITask) => {
       const updatedTasks = tasks.filter((task) => task.id !== taskToDelete.id);
       setTasks(updatedTasks);
-      openToast();
-      const message = `Delete task ${taskToDelete.name} successful!`;
-      setToastMessage(message);
+      toast.success(`Delete task ${taskToDelete.name} successful!`);
 
       localStorage.setItem("tasks", JSON.stringify(updatedTasks));
     },
@@ -106,6 +82,18 @@ export function TaskProvider({ children }: { children: React.ReactNode }) {
       setFilteredTasks(filtered);
     },
     [tasks]
+  );
+
+  const filterTasks = useCallback(
+    (query: string) => {
+      const filtered =
+        query === "All"
+          ? tasks
+          : tasks.filter((task: ITask) => task.priority?.includes(query));
+
+      setFilteredTasks(filtered);
+    },
+    [tasks, setFilteredTasks]
   );
 
   useEffect(() => {
@@ -142,12 +130,8 @@ export function TaskProvider({ children }: { children: React.ReactNode }) {
       addTask,
       editTask,
       deleteTask,
-      toastMessage,
-      setToastMessage,
-      showToast,
-      setShowToast,
-      closeToast,
       searchTasks,
+      filterTasks,
       filteredTasks,
     }),
     [
@@ -155,9 +139,8 @@ export function TaskProvider({ children }: { children: React.ReactNode }) {
       addTask,
       editTask,
       deleteTask,
-      toastMessage,
-      showToast,
       searchTasks,
+      filterTasks,
       filteredTasks,
     ]
   );

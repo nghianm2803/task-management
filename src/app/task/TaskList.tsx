@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { fDeadline } from "../../utils/formatTime";
@@ -12,10 +12,10 @@ import {
 } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import {
-  AiFillPlusCircle,
   AiOutlineFile,
   AiOutlineFileDone,
   AiOutlineFileText,
+  AiOutlinePlus,
 } from "react-icons/ai";
 import { FormProvider, useForm } from "react-hook-form";
 import FTextField from "@/components/form/FTextField";
@@ -24,20 +24,23 @@ import { useTaskContext } from "@/contexts/taskContext";
 import TaskCard from "./TaskCard";
 import { ColorsBase } from "@/theme/colorBase";
 import SearchBar from "@/components/SearchBar";
+import FilterTask from "@/components/FilterTask";
 
 const TaskList = () => {
-  const { tasks, filteredTasks, addTask, searchTasks } = useTaskContext();
+  const { tasks, filteredTasks, addTask, searchTasks, filterTasks } =
+    useTaskContext();
   const displayedTasks = filteredTasks || tasks;
 
   const [showForm, setShowForm] = useState(false);
-  const [filterBy, setFilterBy] = useState("");
 
-  const currentDateTime = fDeadline(new Date().toISOString());
+  const defaultDateTime = fDeadline(
+    new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString()
+  );
 
   const defaultValues = {
     name: "",
     description: "",
-    deadline: currentDateTime,
+    deadline: defaultDateTime,
     status: TaskStatus.TODO,
     priority: TaskPriority.LOW,
     createdAt: new Date().toISOString(),
@@ -73,7 +76,7 @@ const TaskList = () => {
       description: data.description,
       status: TaskStatus.TODO,
       priority: TaskPriority.LOW,
-      deadline: currentDateTime,
+      deadline: defaultDateTime,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
       assignTo: "Unassigned",
@@ -95,12 +98,16 @@ const TaskList = () => {
     searchTasks(query);
   };
 
+  const handleFilterChange = (value: string) => {
+    filterTasks(value);
+  };
+
   return (
     <Container>
-      <Box mb={5} mr={1}>
+      <Stack direction={{ xs: "column", sm: "row" }} mt={4} mb={4} width="100%">
         <SearchBar onSearch={handleSearch} />
-      </Box>
-      <Box mb={5}>{/* FilterTask component */}</Box>
+        <FilterTask onFilterChange={handleFilterChange} />
+      </Stack>
       <Stack
         direction="row"
         spacing={2}
@@ -159,9 +166,12 @@ const TaskList = () => {
             }}
             onClick={handleTaskClick}
           >
-            <AiFillPlusCircle
-              fontSize="large"
-              style={{ color: ColorsBase.white, paddingRight: "5px" }}
+            <AiOutlinePlus
+              style={{
+                color: ColorsBase.white,
+                paddingRight: "5px",
+                fontSize: "25px",
+              }}
             />
             <Typography variant="body2" align="center" color={ColorsBase.white}>
               Task
@@ -187,7 +197,7 @@ const TaskList = () => {
                   type="datetime-local"
                   name="deadline"
                   sx={{ width: 1, mb: "20px" }}
-                  inputProps={{ min: currentDateTime }}
+                  inputProps={{ min: defaultDateTime }}
                 />
                 <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
                   <LoadingButton
