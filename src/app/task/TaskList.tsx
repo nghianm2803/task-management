@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { fDeadline } from "../../utils/formatTime";
@@ -86,20 +86,26 @@ const TaskList = () => {
     reset();
   };
 
+  const handleSearch = useCallback(
+    (query: string) => {
+      searchTasks(query);
+    },
+    [searchTasks]
+  );
+
+  const handleFilterChange = useCallback(
+    (value: string) => {
+      filterTasks(value);
+    },
+    [filterTasks]
+  );
+
   const renderTaskCards = (tasks: Array<ITask>) => {
     return tasks.map((task: ITask) => (
       <React.Fragment key={task.id}>
         <TaskCard task={task} />
       </React.Fragment>
     ));
-  };
-
-  const handleSearch = (query: string) => {
-    searchTasks(query);
-  };
-
-  const handleFilterChange = (value: string) => {
-    filterTasks(value);
   };
 
   return (

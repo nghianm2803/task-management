@@ -3,6 +3,7 @@ import { TextField } from "@mui/material";
 
 interface FSelectProps {
   name: string;
+  value: string;
   children: React.ReactNode;
   onChange?: (event: React.ChangeEvent<{ value: unknown }>) => void;
 }

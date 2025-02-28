@@ -7,16 +7,17 @@ interface FilterTaskProps {
 }
 
 function FilterTask({ onFilterChange }: FilterTaskProps) {
-  const [filterPriority, setFilterPriority] = useState<string>("");
+  const [filterPriority, setFilterPriority] = useState("All");
 
   useEffect(() => {
     onFilterChange(filterPriority);
-  }, [filterPriority, onFilterChange, setFilterPriority]);
+  }, [filterPriority, onFilterChange]);
 
   return (
     <Box sx={{ minWidth: 210 }}>
       <FSelect
         name="filter"
+        value={filterPriority}
         onChange={(e) => setFilterPriority(e.target.value as string)}
       >
         {[
