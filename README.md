@@ -1,36 +1,41 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
-
 ## Getting Started
 
-First, run the development server:
+### Installation
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. Clone the repo
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+   ```sh
+   git clone https://github.com/nghianm2803/task-management.git
+   ```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+2. Install NPM packages
+   ```sh
+   npm install
+   ```
+3. Run the server on your local:
+   ```sh
+   npm run dev
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Features and Specifications
 
-## Learn More
+Tasks:
 
-To learn more about Next.js, take a look at the following resources:
+- Users can view all tasks
+- Users can view a single task with its status (Todo, In progress, Done)
+- Users can create, update or delete a specific task
+- Users can search task by name
+- Users can filter task by priority (Low, Medium, High)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Dashboard:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Users can view the company’s revenue chart for the past 5 years.
+- Users can view the company’s employee chart for the past 24 months.
 
-## Deploy on Vercel
+## Demo link
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+<p align="center">
+    Built with Typescript hosting by Vercel.
+    <br />
+    <a href="https://task-management-ten-gamma.vercel.app/">View Demo</a>
+</p>
