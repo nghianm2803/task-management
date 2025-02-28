@@ -36,6 +36,7 @@ const TaskDetail = ({ task, onClose }: TaskDetailProps): JSX.Element => {
   const [detailTask, setDetailTask] = useState(task);
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [isEditingDeadline, setIsEditingDeadline] = useState(false);
+  const [isEditingName, setIsEditingName] = useState(false);
 
   const handleInputChange = (
     field: keyof ITask,
@@ -52,6 +53,10 @@ const TaskDetail = ({ task, onClose }: TaskDetailProps): JSX.Element => {
 
   const handleDeadlineChange = () => {
     setIsEditingDeadline(!isEditingDeadline);
+  };
+
+  const handleNameChange = () => {
+    setIsEditingName(!isEditingName);
   };
 
   const updateTask = () => {
@@ -78,6 +83,7 @@ const TaskDetail = ({ task, onClose }: TaskDetailProps): JSX.Element => {
         position: "fixed",
         top: "170px",
         right: 0,
+        paddingBottom: "100px",
         height: "calc(100vh - 65px)",
         borderRadius: "10px 10px 0 0",
         border: `1px solid ${ColorsBase.gray400}`,
@@ -104,14 +110,29 @@ const TaskDetail = ({ task, onClose }: TaskDetailProps): JSX.Element => {
           alignItems="center"
         >
           <Box sx={{ flex: 1 }}>
-            <CardContent>
-              <TextField
-                value={detailTask.name}
-                onChange={(e) => handleInputChange("name", e.target.value)}
-                fullWidth
-                variant="standard"
-              />
-            </CardContent>
+            {isEditingName ? (
+              <CardContent>
+                <TextField
+                  value={detailTask.name}
+                  onChange={(e) => handleInputChange("name", e.target.value)}
+                  fullWidth
+                  variant="standard"
+                />
+              </CardContent>
+            ) : (
+              <CardContent>
+                <Typography
+                  variant="h6"
+                  onClick={handleNameChange}
+                  sx={{
+                    cursor: "pointer",
+                    color: ColorsBase.gray900,
+                  }}
+                >
+                  {detailTask.name}
+                </Typography>
+              </CardContent>
+            )}
           </Box>
           <Stack direction="row" spacing={1}>
             <IconButton onClick={handleDeleteTask}>

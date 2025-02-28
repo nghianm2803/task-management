@@ -1,45 +1,29 @@
 import React, { useState } from "react";
-import { Typography, Box, Card, Stack } from "@mui/material";
+import { Typography, Box, Card } from "@mui/material";
 import { fDate } from "../../utils/formatTime";
 import TaskDetail from "./TaskDetail";
 import { ITask, TaskPriority } from "@/interface/task.model";
 import { ColorsBase } from "@/theme/colorBase";
 import { getPriorityColor } from "@/utils/helper";
 
-const TaskCard: React.FC<{ task: ITask }> = ({ task }) => {
-  const [showDetail, setShowDetail] = useState(false);
+const TaskCard: React.FC<{
+  task: ITask;
+  isOpen: boolean;
+  onOpen: (id: number) => void;
+}> = ({ task, isOpen, onOpen }) => {
   const [isHovered, setIsHovered] = useState(false);
 
-  const handleHover = () => {
-    setIsHovered(true);
-  };
-
-  const handleLeave = () => {
-    setIsHovered(false);
-  };
-
-  const handleTaskClick = () => {
-    setShowDetail(!showDetail);
-  };
-
-  const handleCloseForm = () => {
-    setShowDetail(false);
-  };
+  const handleHover = () => setIsHovered(true);
+  const handleLeave = () => setIsHovered(false);
 
   return (
     <>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
+      <Box sx={{ display: "flex", flexDirection: "column" }}>
         <Card
           sx={{
             p: 1,
             width: "100%",
             minHeight: "40px",
-            height: "auto",
             position: "relative",
             overflow: "hidden",
             marginBottom: "10px",
@@ -50,7 +34,7 @@ const TaskCard: React.FC<{ task: ITask }> = ({ task }) => {
           }}
           onMouseEnter={handleHover}
           onMouseLeave={handleLeave}
-          onClick={handleTaskClick}
+          onClick={() => onOpen(task.id)}
         >
           <Typography sx={styleTypoTitle} variant="h3">
             {task.name}
@@ -60,25 +44,17 @@ const TaskCard: React.FC<{ task: ITask }> = ({ task }) => {
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              rowGap: 3,
-              columnGap: 2,
-              gridTemplateColumns: {
-                xs: "repeat(1, 1fr)",
-                sm: "repeat(2, 1fr)",
-              },
             }}
           >
-            <Stack direction="row" spacing={2} alignItems="center">
-              <Typography sx={styleTypo}>
-                {task.assignTo !== null ? task.assignTo : "Unassigned"}
-              </Typography>
-            </Stack>
+            <Typography sx={styleTypo}>
+              {task.assignTo !== null ? task.assignTo : "Unassigned"}
+            </Typography>
             <Typography sx={styleTypo}>
               {task.deadline ? fDate(task.deadline) : ""}
             </Typography>
           </Box>
         </Card>
-        {showDetail && <TaskDetail task={task} onClose={handleCloseForm} />}
+        {isOpen && <TaskDetail task={task} onClose={() => onOpen(task.id)} />}
       </Box>
     </>
   );
@@ -101,7 +77,7 @@ const styleTypo = {
   letterSpace: "0px",
   wordBreak: "break-word",
   cursor: "pointer",
-  color: "#212B36",
+  color: ColorsBase.gray900,
 };
 
 export default TaskCard;

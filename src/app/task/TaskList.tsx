@@ -32,6 +32,11 @@ const TaskList = () => {
   const displayedTasks = filteredTasks || tasks;
 
   const [showForm, setShowForm] = useState(false);
+  const [openTaskId, setOpenTaskId] = useState<number | null>(null);
+
+  const handleOpenTask = (taskId: number) => {
+    setOpenTaskId((prev) => (prev === taskId ? null : taskId));
+  };
 
   const defaultDateTime = fDeadline(
     new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString()
@@ -103,7 +108,11 @@ const TaskList = () => {
   const renderTaskCards = (tasks: Array<ITask>) => {
     return tasks.map((task: ITask) => (
       <React.Fragment key={task.id}>
-        <TaskCard task={task} />
+        <TaskCard
+          task={task}
+          isOpen={openTaskId === task.id}
+          onOpen={handleOpenTask}
+        />
       </React.Fragment>
     ));
   };
