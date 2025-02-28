@@ -110,200 +110,157 @@ const TaskList = () => {
 
   return (
     <Container>
-      <Stack direction={{ xs: "column", sm: "row" }} mt={4} mb={4} width="100%">
+      <Stack
+        direction={{ xs: "column", sm: "row" }}
+        mt={4}
+        mb={4}
+        width="100%"
+        alignItems="center"
+        justifyContent="flex-start"
+        gap={2}
+      >
         <SearchBar onSearch={handleSearch} />
         <FilterTask onFilterChange={handleFilterChange} />
       </Stack>
       <Stack
         direction="row"
-        spacing={2}
         justifyContent="space-between"
         alignItems="flex-start"
         flexWrap="wrap"
+        gap={2}
       >
-        <Box sx={{ flex: 1, minWidth: 300 }}>
-          <Card
-            sx={{
-              width: "100%",
-              height: "40px",
-              display: "flex",
-              alignItems: "center",
-              mb: "10px",
-              backgroundColor: ColorsBase.blue100,
-            }}
-          >
-            <CardContent
-              sx={{ mt: "6px", display: "flex", alignItems: "center" }}
-            >
-              <AiOutlineFile
-                style={{
-                  color: ColorsBase.blue500,
-                  paddingRight: "5px",
-                  fontSize: "25px",
-                }}
-              />
-              <Typography
-                variant="body2"
-                align="left"
-                color={ColorsBase.blue500}
-              >
-                To Do
-              </Typography>
-            </CardContent>
-          </Card>
-
-          <Box sx={{ width: "100%", borderRadius: "8px" }}>
-            {displayedTasks.length > 0 &&
-              renderTaskCards(
-                displayedTasks.filter((task) => task.status === TaskStatus.TODO)
-              )}
-          </Box>
-
-          <Card
-            sx={{
-              mb: "10px",
-              width: "100%",
-              height: "40px",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              cursor: "pointer",
-              backgroundColor: ColorsBase.green500,
-            }}
-            onClick={handleTaskClick}
-          >
-            <AiOutlinePlus
-              style={{
-                color: ColorsBase.white,
-                paddingRight: "5px",
-                fontSize: "25px",
-              }}
-            />
-            <Typography variant="body2" align="center" color={ColorsBase.white}>
-              Task
-            </Typography>
-          </Card>
-
-          {showForm && (
-            <FormProvider {...methods}>
-              <form onSubmit={handleSubmit(onSubmit)}>
-                <FTextField
-                  name="name"
-                  fullWidth
-                  required
-                  placeholder="Task's name"
-                />
-                <FTextField
-                  name="description"
-                  fullWidth
-                  required
-                  placeholder="Task's description"
-                />
-                <FTextField
-                  type="datetime-local"
-                  name="deadline"
-                  sx={{ width: 1, mb: "20px" }}
-                  inputProps={{ min: defaultDateTime }}
-                />
-                <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-                  <LoadingButton
-                    type="submit"
-                    variant="contained"
-                    size="small"
-                    loading={isSubmitting}
-                    color="success"
-                  >
-                    Create Task
-                  </LoadingButton>
-                </Box>
-              </form>
-            </FormProvider>
-          )}
-        </Box>
-
-        <Box sx={{ flex: 1, minWidth: 300 }}>
-          <Card
-            sx={{
-              width: "100%",
-              height: "40px",
-              display: "flex",
-              alignItems: "center",
-              mb: "10px",
-              backgroundColor: ColorsBase.yellow100,
-            }}
-          >
-            <CardContent
-              sx={{ mt: "6px", display: "flex", alignItems: "center" }}
-            >
-              <AiOutlineFileText
-                style={{
-                  color: ColorsBase.yellow500,
-                  paddingRight: "5px",
-                  fontSize: "25px",
-                }}
-              />
-              <Typography
-                variant="body1"
-                align="left"
-                color={ColorsBase.yellow500}
-              >
-                In Progress
-              </Typography>
-            </CardContent>
-          </Card>
-
-          <Box sx={{ width: "100%", borderRadius: "8px" }}>
-            {displayedTasks.length > 0 &&
-              renderTaskCards(
-                displayedTasks.filter(
-                  (task) => task.status === TaskStatus.IN_PROGRESS
-                )
-              )}
-          </Box>
-        </Box>
-
-        <Box sx={{ flex: 1, minWidth: 300 }}>
-          <Card
-            sx={{
-              width: "100%",
-              height: "40px",
-              display: "flex",
-              alignItems: "center",
-              mb: "10px",
-              backgroundColor: ColorsBase.green100,
-            }}
-          >
-            <CardContent
+        {[
+          {
+            status: TaskStatus.TODO,
+            title: "To Do",
+            color: ColorsBase.blue100,
+            icon: AiOutlineFile,
+            textColor: ColorsBase.blue500,
+            showAddButton: true,
+          },
+          {
+            status: TaskStatus.IN_PROGRESS,
+            title: "In Progress",
+            color: ColorsBase.yellow100,
+            icon: AiOutlineFileText,
+            textColor: ColorsBase.yellow500,
+          },
+          {
+            status: TaskStatus.DONE,
+            title: "Done",
+            color: ColorsBase.green100,
+            icon: AiOutlineFileDone,
+            textColor: ColorsBase.green500,
+          },
+        ].map(
+          ({ status, title, color, icon: Icon, textColor, showAddButton }) => (
+            <Box
+              key={status}
               sx={{
-                mt: "6px",
-                display: "flex",
-                alignItems: "center",
+                flex: 1,
+                minWidth: { xs: "100%", sm: 300 },
               }}
             >
-              <AiOutlineFileDone
-                style={{
-                  color: ColorsBase.green500,
-                  paddingRight: "5px",
-                  fontSize: "25px",
+              <Card
+                sx={{
+                  width: "100%",
+                  height: 40,
+                  display: "flex",
+                  alignItems: "center",
+                  mb: 2,
+                  backgroundColor: color,
                 }}
-              />
-              <Typography
-                variant="body1"
-                align="left"
-                color={ColorsBase.green500}
               >
-                Done
-              </Typography>
-            </CardContent>
-          </Card>
+                <CardContent sx={{ display: "flex", alignItems: "center" }}>
+                  <Icon
+                    style={{ color: textColor, paddingRight: 5, fontSize: 25 }}
+                  />
+                  <Typography variant="body1" align="left" color={textColor}>
+                    {title}
+                  </Typography>
+                </CardContent>
+              </Card>
 
-          <Box sx={{ width: "100%", borderRadius: "8px" }}>
-            {displayedTasks.length > 0 &&
-              renderTaskCards(
-                displayedTasks.filter((task) => task.status === TaskStatus.DONE)
+              <Box sx={{ width: "100%", borderRadius: "8px" }}>
+                {displayedTasks.length > 0 &&
+                  renderTaskCards(
+                    displayedTasks.filter((task) => task.status === status)
+                  )}
+              </Box>
+
+              {showAddButton && (
+                <>
+                  <Card
+                    sx={{
+                      mb: 2,
+                      width: "100%",
+                      height: 40,
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      cursor: "pointer",
+                      backgroundColor: ColorsBase.green500,
+                    }}
+                    onClick={handleTaskClick}
+                  >
+                    <AiOutlinePlus
+                      style={{
+                        color: ColorsBase.white,
+                        paddingRight: 5,
+                        fontSize: 25,
+                      }}
+                    />
+                    <Typography
+                      variant="body2"
+                      align="center"
+                      color={ColorsBase.white}
+                    >
+                      Add Task
+                    </Typography>
+                  </Card>
+
+                  {showForm && (
+                    <FormProvider {...methods}>
+                      <form onSubmit={handleSubmit(onSubmit)}>
+                        <FTextField
+                          name="name"
+                          fullWidth
+                          required
+                          placeholder="Task's name"
+                        />
+                        <FTextField
+                          name="description"
+                          fullWidth
+                          required
+                          placeholder="Task's description"
+                        />
+                        <FTextField
+                          type="datetime-local"
+                          name="deadline"
+                          sx={{ width: 1, mb: 2 }}
+                          inputProps={{ min: defaultDateTime }}
+                        />
+                        <Box
+                          sx={{ display: "flex", justifyContent: "flex-end" }}
+                        >
+                          <LoadingButton
+                            type="submit"
+                            variant="contained"
+                            size="small"
+                            loading={isSubmitting}
+                            color="success"
+                          >
+                            Create Task
+                          </LoadingButton>
+                        </Box>
+                      </form>
+                    </FormProvider>
+                  )}
+                </>
               )}
-          </Box>
-        </Box>
+            </Box>
+          )
+        )}
       </Stack>
     </Container>
   );

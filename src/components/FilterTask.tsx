@@ -14,7 +14,12 @@ function FilterTask({ onFilterChange }: FilterTaskProps) {
   }, [filterPriority, onFilterChange]);
 
   return (
-    <Box sx={{ minWidth: 210 }}>
+    <Box
+      sx={{
+        width: "80%",
+        maxWidth: "200px",
+      }}
+    >
       <FSelect
         name="filter"
         value={filterPriority}

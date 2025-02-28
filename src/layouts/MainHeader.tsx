@@ -45,8 +45,8 @@ const MainHeader = () => {
   return (
     <Box
       sx={{
-        px: 3,
-        py: 2,
+        px: { xs: 2, md: 3 },
+        py: { xs: 1, md: 2 },
         boxShadow: 3,
         bgcolor: ColorsBase.gray900,
       }}
@@ -75,7 +75,8 @@ const MainHeader = () => {
               "&:hover": {
                 transform: "translateY(-2px)",
               },
-              display: { xs: "none", md: "block" },
+              display: { xs: "block", md: "block" },
+              fontSize: { xs: "14px", md: "18px" },
               color: ColorsBase.white,
             }}
           >
@@ -89,8 +90,8 @@ const MainHeader = () => {
               borderRadius: "50%",
               border: "2px solid white",
               overflow: "hidden",
-              width: 45,
-              height: 45,
+              width: { xs: 35, md: 45 },
+              height: { xs: 35, md: 45 },
             }}
           >
             <Image src={Avatar} alt="Avatar" width={40} height={40} priority />

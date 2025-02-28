@@ -16,7 +16,11 @@ function SearchBar({ onSearch }: SearchBarProps) {
   };
 
   return (
-    <Box sx={{ minWidth: 500 }}>
+    <Box
+      sx={{
+        flexGrow: 1,
+      }}
+    >
       <form
         id="searchForm"
         onSubmit={handleSearch}
