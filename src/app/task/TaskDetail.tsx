@@ -11,6 +11,7 @@ import {
   Typography,
   Button,
   Stack,
+  Autocomplete,
 } from "@mui/material";
 import {
   AiOutlineClose,
@@ -21,10 +22,11 @@ import {
 } from "react-icons/ai";
 import { toast } from "react-toastify";
 import { useTaskContext } from "@/contexts/taskContext";
-import { ITask, TaskPriority, TaskStatus } from "@/interface/task.model";
+import { ITask, IUser, TaskPriority, TaskStatus } from "@/interface/task.model";
 import DeleteTask from "./DeleteTask";
 import { ColorsBase } from "@/theme/colorBase";
 import { getPriorityColor, getStatusColor } from "@/utils/helper";
+import { USER } from "@/constant/data";
 
 interface TaskDetailProps {
   onClose: () => void;
@@ -37,10 +39,11 @@ const TaskDetail = ({ task, onClose }: TaskDetailProps): JSX.Element => {
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [isEditingDeadline, setIsEditingDeadline] = useState(false);
   const [isEditingName, setIsEditingName] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleInputChange = (
     field: keyof ITask,
-    value: string | TaskStatus | TaskPriority
+    value: string | TaskStatus | TaskPriority | IUser | null
   ) => {
     if (detailTask.status === TaskStatus.DONE)
       return toast.error("Cannot edit a completed task");
@@ -76,6 +79,9 @@ const TaskDetail = ({ task, onClose }: TaskDetailProps): JSX.Element => {
     deleteTask(detailTask);
     setOpenDeleteDialog(false);
   };
+
+  const isOptionEqualToValue = (option: IUser, value: IUser) =>
+    option.id === value?.id;
 
   return (
     <Box
@@ -317,13 +323,30 @@ const TaskDetail = ({ task, onClose }: TaskDetailProps): JSX.Element => {
               <Card>
                 <CardContent>
                   <Typography variant="body2">Assignee</Typography>
-                  <TextField
-                    multiline
-                    value={detailTask.assignTo}
-                    onChange={(e) =>
-                      handleInputChange("assignTo", e.target.value)
+                  <Autocomplete
+                    options={USER.filter((user) =>
+                      user.username
+                        .toLowerCase()
+                        .includes(searchQuery.toLowerCase())
+                    )}
+                    getOptionLabel={(user) => user.username}
+                    value={
+                      USER.find(
+                        (user: IUser) => user === detailTask.assignTo
+                      ) ?? null
                     }
-                    fullWidth
+                    isOptionEqualToValue={isOptionEqualToValue}
+                    onChange={(event, user) =>
+                      handleInputChange("assignTo", user ?? null)
+                    }
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        label="Assignee"
+                        variant="standard"
+                      />
+                    )}
                   />
                 </CardContent>
               </Card>

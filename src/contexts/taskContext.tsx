@@ -10,7 +10,7 @@ import React, {
 } from "react";
 import LoadingSkeleton from "../components/LoadingSkeleton";
 import { ITask } from "../interface/task.model";
-import { TASKS } from "../constant/task";
+import { TASKS } from "../constant/data";
 import { toast } from "react-toastify";
 
 interface TaskContextProps {

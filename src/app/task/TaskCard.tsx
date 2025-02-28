@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Typography, Box, Card } from "@mui/material";
+import { Typography, Box, Card, Avatar, Stack } from "@mui/material";
 import { fDate } from "../../utils/formatTime";
 import TaskDetail from "./TaskDetail";
 import { ITask, TaskPriority } from "@/interface/task.model";
@@ -27,6 +27,7 @@ const TaskCard: React.FC<{
             position: "relative",
             overflow: "hidden",
             marginBottom: "10px",
+            borderTop: `1px solid ${ColorsBase.gray200}`,
             borderBottom: `3px solid ${getPriorityColor(
               task.priority ?? TaskPriority.LOW
             )}`,
@@ -44,11 +45,32 @@ const TaskCard: React.FC<{
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
+              marginTop: "5px",
             }}
           >
-            <Typography sx={styleTypo}>
-              {task.assignTo !== null ? task.assignTo : "Unassigned"}
-            </Typography>
+            <Stack
+              direction="row"
+              spacing={1}
+              alignItems="center"
+              sx={{
+                borderRadius: "5px",
+                backgroundColor: ColorsBase.gray100,
+                padding: "5px",
+              }}
+            >
+              {task.assignTo && (
+                <Avatar
+                  alt={task.assignTo.username}
+                  src={task.assignTo.avatar}
+                  sx={{ width: "30px", height: "30px" }}
+                />
+              )}
+              <Typography sx={styleTypo}>
+                {task.assignTo?.username !== undefined
+                  ? task.assignTo?.username
+                  : "Unassigned"}
+              </Typography>
+            </Stack>
             <Typography sx={styleTypo}>
               {task.deadline ? fDate(task.deadline) : ""}
             </Typography>

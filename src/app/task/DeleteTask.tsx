@@ -34,7 +34,7 @@ function DeleteTask({
         </Typography>
       </DialogContent>
       <DialogActions>
-        <Button variant="contained" onClick={handleDeleteTask}>
+        <Button variant="contained" onClick={handleDeleteTask} color="error">
           Delete
         </Button>
         <Button variant="outlined" onClick={deleteDialogClose}>

@@ -10,7 +10,12 @@ export const TASKS = [
     deadline: "2025-03-10T10:00",
     createdAt: "2025-02-20T10:00",
     updatedAt: "2025-02-20T10:00",
-    assignTo: "Nghia Nguyen",
+    assignTo: {
+      id: 1,
+      email: "emily.johnson@x.dummyjson.com",
+      username: "emilys",
+      avatar: "https://i.pravatar.cc/150?u=emily.johnson@x.dummyjson.com",
+    },
   },
   {
     id: 2,
@@ -21,7 +26,12 @@ export const TASKS = [
     deadline: "2025-03-15T12:00",
     createdAt: "2025-02-21T09:30",
     updatedAt: "2025-02-23T14:20",
-    assignTo: "Nghia Nguyen",
+    assignTo: {
+      id: 1,
+      email: "emily.johnson@x.dummyjson.com",
+      username: "emilys",
+      avatar: "https://i.pravatar.cc/150?u=emily.johnson@x.dummyjson.com",
+    },
   },
   {
     id: 3,
@@ -32,7 +42,12 @@ export const TASKS = [
     deadline: "2025-03-05T15:00",
     createdAt: "2025-02-22T08:45",
     updatedAt: "2025-02-22T08:45",
-    assignTo: "Nghia Nguyen",
+    assignTo: {
+      id: 1,
+      email: "emily.johnson@x.dummyjson.com",
+      username: "emilys",
+      avatar: "https://i.pravatar.cc/150?u=emily.johnson@x.dummyjson.com",
+    },
   },
   {
     id: 4,
@@ -43,7 +58,12 @@ export const TASKS = [
     deadline: "2025-02-28T17:00",
     createdAt: "2025-02-19T11:00",
     updatedAt: "2025-02-26T13:30",
-    assignTo: "Nghia Nguyen",
+    assignTo: {
+      id: 2,
+      email: "michael.smith@x.dummyjson.com",
+      username: "mikes",
+      avatar: "https://i.pravatar.cc/150?u=michael.smith@x.dummyjson.com",
+    },
   },
   {
     id: 5,
@@ -54,7 +74,12 @@ export const TASKS = [
     deadline: "2025-03-20T09:00",
     createdAt: "2025-02-24T10:10",
     updatedAt: "2025-02-25T12:00",
-    assignTo: "Van Thanh",
+    assignTo: {
+      id: 1,
+      email: "emily.johnson@x.dummyjson.com",
+      username: "emilys",
+      avatar: "https://i.pravatar.cc/150?u=emily.johnson@x.dummyjson.com",
+    },
   },
   {
     id: 6,
@@ -65,7 +90,12 @@ export const TASKS = [
     deadline: "2025-03-08T14:30",
     createdAt: "2025-02-21T07:30",
     updatedAt: "2025-02-21T07:30",
-    assignTo: "Nghia Nguyen",
+    assignTo: {
+      id: 1,
+      email: "emily.johnson@x.dummyjson.com",
+      username: "emilys",
+      avatar: "https://i.pravatar.cc/150?u=emily.johnson@x.dummyjson.com",
+    },
   },
   {
     id: 7,
@@ -76,7 +106,12 @@ export const TASKS = [
     deadline: "2025-03-12T20:00",
     createdAt: "2025-02-23T06:15",
     updatedAt: "2025-02-25T09:45",
-    assignTo: "Van Thanh",
+    assignTo: {
+      id: 9,
+      email: "ava.anderson@x.dummyjson.com",
+      username: "avaa",
+      avatar: "https://i.pravatar.cc/150?u=ava.anderson@x.dummyjson.com",
+    },
   },
   {
     id: 8,
@@ -87,7 +122,12 @@ export const TASKS = [
     deadline: "2025-02-27T11:00",
     createdAt: "2025-02-18T14:00",
     updatedAt: "2025-02-25T16:00",
-    assignTo: "Nghia Nguyen",
+    assignTo: {
+      id: 8,
+      email: "ethan.taylor@x.dummyjson.com",
+      username: "ethant",
+      avatar: "https://i.pravatar.cc/150?u=ethan.taylor@x.dummyjson.com",
+    },
   },
   {
     id: 9,
@@ -98,7 +138,12 @@ export const TASKS = [
     deadline: "2025-03-14T08:00",
     createdAt: "2025-02-22T13:20",
     updatedAt: "2025-02-22T13:20",
-    assignTo: "Nghia Nguyen",
+    assignTo: {
+      id: 4,
+      email: "daniel.miller@x.dummyjson.com",
+      username: "danm",
+      avatar: "https://i.pravatar.cc/150?u=daniel.miller@x.dummyjson.com",
+    },
   },
   {
     id: 10,
@@ -109,7 +154,75 @@ export const TASKS = [
     deadline: "2025-03-25T15:30",
     createdAt: "2025-02-24T11:10",
     updatedAt: "2025-02-25T10:40",
-    assignTo: "Van Thanh",
+    assignTo: {
+      id: 1,
+      email: "emily.johnson@x.dummyjson.com",
+      username: "emilys",
+      avatar: "https://i.pravatar.cc/150?u=emily.johnson@x.dummyjson.com",
+    },
+  },
+];
+
+export const USER = [
+  {
+    id: 1,
+    email: "emily.johnson@x.dummyjson.com",
+    username: "emilys",
+    avatar: "https://i.pravatar.cc/150?u=emily.johnson@x.dummyjson.com",
+  },
+  {
+    id: 2,
+    email: "michael.smith@x.dummyjson.com",
+    username: "mikes",
+    avatar: "https://i.pravatar.cc/150?u=michael.smith@x.dummyjson.com",
+  },
+  {
+    id: 3,
+    email: "sophia.brown@x.dummyjson.com",
+    username: "sophieb",
+    avatar: "https://i.pravatar.cc/150?u=sophia.brown@x.dummyjson.com",
+  },
+  {
+    id: 4,
+    email: "daniel.miller@x.dummyjson.com",
+    username: "danm",
+    avatar: "https://i.pravatar.cc/150?u=daniel.miller@x.dummyjson.com",
+  },
+  {
+    id: 5,
+    email: "olivia.davis@x.dummyjson.com",
+    username: "oliviad",
+    avatar: "https://i.pravatar.cc/150?u=olivia.davis@x.dummyjson.com",
+  },
+  {
+    id: 6,
+    email: "james.wilson@x.dummyjson.com",
+    username: "jamesw",
+    avatar: "https://i.pravatar.cc/150?u=james.wilson@x.dummyjson.com",
+  },
+  {
+    id: 7,
+    email: "isabella.moore@x.dummyjson.com",
+    username: "isabellam",
+    avatar: "https://i.pravatar.cc/150?u=isabella.moore@x.dummyjson.com",
+  },
+  {
+    id: 8,
+    email: "ethan.taylor@x.dummyjson.com",
+    username: "ethant",
+    avatar: "https://i.pravatar.cc/150?u=ethan.taylor@x.dummyjson.com",
+  },
+  {
+    id: 9,
+    email: "ava.anderson@x.dummyjson.com",
+    username: "avaa",
+    avatar: "https://i.pravatar.cc/150?u=ava.anderson@x.dummyjson.com",
+  },
+  {
+    id: 10,
+    email: "william.thomas@x.dummyjson.com",
+    username: "willt",
+    avatar: "https://i.pravatar.cc/150?u=william.thomas@x.dummyjson.com",
   },
 ];
 

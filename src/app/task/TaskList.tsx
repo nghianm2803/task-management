@@ -84,7 +84,7 @@ const TaskList = () => {
       deadline: defaultDateTime,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
-      assignTo: "Unassigned",
+      assignTo: undefined,
     };
 
     addTask(newTask);

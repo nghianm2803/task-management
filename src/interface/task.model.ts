@@ -7,7 +7,14 @@ export interface ITask {
   deadline?: string;
   createdAt?: string;
   updatedAt?: string;
-  assignTo?: string;
+  assignTo?: IUser;
+}
+
+export interface IUser {
+  id: number;
+  email: string;
+  username: string;
+  avatar: string;
 }
 
 export enum TaskStatus {

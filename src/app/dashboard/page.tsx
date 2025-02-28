@@ -15,7 +15,7 @@ import {
 } from "recharts";
 import { ColorsBase } from "@/theme/colorBase";
 import MainHeader from "@/layouts/MainHeader";
-import { EMPLOYEES, REVENUES } from "@/constant/task";
+import { EMPLOYEES, REVENUES } from "@/constant/data";
 
 const Dashboard = () => {
   const [selectedChart, setSelectedChart] = useState("revenue");
