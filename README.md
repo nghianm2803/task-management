@@ -35,7 +35,7 @@ Dashboard:
 ## Demo link
 
 <p align="center">
-    Built with Typescript hosting by Vercel.
+    Built with Typescript - hosting by Vercel.
     <br />
     <a href="https://task-management-ten-gamma.vercel.app/">View Demo</a>
 </p>

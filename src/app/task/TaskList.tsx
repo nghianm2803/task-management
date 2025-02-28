@@ -171,7 +171,9 @@ const TaskList = () => {
                   backgroundColor: color,
                 }}
               >
-                <CardContent sx={{ display: "flex", alignItems: "center" }}>
+                <CardContent
+                  sx={{ display: "flex", alignItems: "center", paddingTop: 3 }}
+                >
                   <Icon
                     style={{ color: textColor, paddingRight: 5, fontSize: 25 }}
                   />

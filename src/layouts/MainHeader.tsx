@@ -58,31 +58,43 @@ const MainHeader = () => {
           alignItems: "center",
         }}
       >
-        <Link href="/">
-          <Typography
-            variant="h6"
-            component="p"
-            sx={{
-              borderRadius: 2,
-              border: "2px solid",
-              borderBottomWidth: "4px",
-              borderRightWidth: "4px",
-              borderColor: ColorsBase.white,
-              px: 2,
-              py: 1,
-              fontWeight: "bold",
-              transition: "transform 0.2s",
-              "&:hover": {
-                transform: "translateY(-2px)",
-              },
-              display: { xs: "block", md: "block" },
-              fontSize: { xs: "14px", md: "18px" },
-              color: ColorsBase.white,
-            }}
-          >
-            Task Management
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "flex-start",
+            alignItems: "center",
+            gap: 4,
+          }}
+        >
+          <Link href="/">
+            <Typography
+              variant="h6"
+              component="p"
+              sx={{
+                borderRadius: 2,
+                border: "2px solid",
+                borderBottomWidth: "4px",
+                borderRightWidth: "4px",
+                borderColor: ColorsBase.white,
+                px: 2,
+                py: 1,
+                fontWeight: "bold",
+                transition: "transform 0.2s",
+                "&:hover": {
+                  transform: "translateY(-2px)",
+                },
+                display: { xs: "block", md: "block" },
+                fontSize: { xs: "14px", md: "18px" },
+                color: ColorsBase.white,
+              }}
+            >
+              Task Management
+            </Typography>
+          </Link>
+          <Typography sx={{ color: ColorsBase.white }}>
+            <Link href="/dashboard">Dashboard</Link>
           </Typography>
-        </Link>
+        </Box>
         <Button onClick={handleProfileMenuOpen}>
           <Box
             sx={{
