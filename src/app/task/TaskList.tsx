@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { fDeadline } from "../../utils/formatTime";
@@ -25,6 +25,7 @@ import TaskCard from "./TaskCard";
 import { ColorsBase } from "@/theme/colorBase";
 import SearchBar from "@/components/SearchBar";
 import FilterTask from "@/components/FilterTask";
+import { v4 as uuidv4 } from "uuid";
 
 const TaskList = () => {
   const { tasks, filteredTasks, addTask, searchTasks, filterTasks } =
@@ -32,15 +33,13 @@ const TaskList = () => {
   const displayedTasks = filteredTasks || tasks;
 
   const [showForm, setShowForm] = useState(false);
-  const [openTaskId, setOpenTaskId] = useState<number | null>(null);
+  const [openTaskId, setOpenTaskId] = useState<string | null>(null);
 
-  const handleOpenTask = (taskId: number) => {
+  const handleOpenTask = (taskId: string) => {
     setOpenTaskId((prev) => (prev === taskId ? null : taskId));
   };
 
-  const defaultDateTime = fDeadline(
-    new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString()
-  );
+  const defaultDateTime = fDeadline(new Date().toISOString());
 
   const defaultValues = {
     name: "",
@@ -52,9 +51,21 @@ const TaskList = () => {
     updatedAt: new Date().toISOString(),
     assignTo: "",
   };
+  const formRef = useRef<HTMLDivElement | null>(null);
 
   const handleTaskClick = () => {
-    setShowForm((prevState) => !prevState);
+    setShowForm((prevState) => {
+      const newState = !prevState;
+      if (newState) {
+        setTimeout(() => {
+          formRef.current?.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+        }, 100);
+      }
+      return newState;
+    });
   };
 
   const yupSchema = Yup.object().shape({
@@ -74,7 +85,7 @@ const TaskList = () => {
   } = methods;
 
   const onSubmit = (data: { name: string; description: string }) => {
-    const taskId = Math.floor(Math.random() * 1000);
+    const taskId = uuidv4();
     const newTask: ITask = {
       id: taskId,
       name: data.name,
@@ -89,6 +100,7 @@ const TaskList = () => {
 
     addTask(newTask);
     reset();
+    setShowForm(false);
   };
 
   const handleSearch = useCallback(
@@ -231,41 +243,45 @@ const TaskList = () => {
                   </Card>
 
                   {showForm && (
-                    <FormProvider {...methods}>
-                      <form onSubmit={handleSubmit(onSubmit)}>
-                        <FTextField
-                          name="name"
-                          fullWidth
-                          required
-                          placeholder="Task's name"
-                        />
-                        <FTextField
-                          name="description"
-                          fullWidth
-                          required
-                          placeholder="Task's description"
-                        />
-                        <FTextField
-                          type="datetime-local"
-                          name="deadline"
-                          sx={{ width: 1, mb: 2 }}
-                          inputProps={{ min: defaultDateTime }}
-                        />
-                        <Box
-                          sx={{ display: "flex", justifyContent: "flex-end" }}
-                        >
-                          <LoadingButton
-                            type="submit"
-                            variant="contained"
-                            size="small"
-                            loading={isSubmitting}
-                            color="success"
+                    <div ref={formRef} style={{ paddingBottom: 20 }}>
+                      <FormProvider {...methods}>
+                        <form onSubmit={handleSubmit(onSubmit)}>
+                          <FTextField
+                            name="name"
+                            fullWidth
+                            required
+                            placeholder="Task's name"
+                            sx={{ mb: 1 }}
+                          />
+                          <FTextField
+                            name="description"
+                            fullWidth
+                            required
+                            placeholder="Task's description"
+                            sx={{ mb: 1 }}
+                          />
+                          <FTextField
+                            type="datetime-local"
+                            name="deadline"
+                            sx={{ width: 1, mb: 2 }}
+                            inputProps={{ min: defaultDateTime }}
+                          />
+                          <Box
+                            sx={{ display: "flex", justifyContent: "flex-end" }}
                           >
-                            Create Task
-                          </LoadingButton>
-                        </Box>
-                      </form>
-                    </FormProvider>
+                            <LoadingButton
+                              type="submit"
+                              variant="contained"
+                              size="small"
+                              loading={isSubmitting}
+                              color="success"
+                            >
+                              Create Task
+                            </LoadingButton>
+                          </Box>
+                        </form>
+                      </FormProvider>
+                    </div>
                   )}
                 </>
               )}

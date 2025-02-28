@@ -9,7 +9,7 @@ import {
 import React, { JSX } from "react";
 
 interface DeleteTaskProps {
-  id: number;
+  id: string;
   openDeleteDialog: boolean;
   deleteDialogClose: () => void;
   onDelete: () => void;

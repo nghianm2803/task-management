@@ -9,7 +9,7 @@ import { getPriorityColor } from "@/utils/helper";
 const TaskCard: React.FC<{
   task: ITask;
   isOpen: boolean;
-  onOpen: (id: number) => void;
+  onOpen: (id: string) => void;
 }> = ({ task, isOpen, onOpen }) => {
   const [isHovered, setIsHovered] = useState(false);
 

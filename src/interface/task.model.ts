@@ -1,5 +1,5 @@
 export interface ITask {
-  id: number;
+  id: string;
   name: string;
   description: string;
   status?: TaskStatus;
@@ -11,7 +11,7 @@ export interface ITask {
 }
 
 export interface IUser {
-  id: number;
+  id: string;
   email: string;
   username: string;
   avatar: string;
