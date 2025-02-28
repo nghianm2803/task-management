@@ -24,6 +24,7 @@ Tasks:
 - Users can view all tasks
 - Users can view a single task with its status (Todo, In progress, Done)
 - Users can create, update or delete a specific task
+- Users can assign task to a specific user
 - Users can search task by name
 - Users can filter task by priority (Low, Medium, High)
 
