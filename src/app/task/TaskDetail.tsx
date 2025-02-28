@@ -76,11 +76,11 @@ const TaskDetail = ({ task, onClose }: TaskDetailProps): JSX.Element => {
     <Box
       sx={{
         position: "fixed",
-        top: "370px",
+        top: "170px",
         right: 0,
         height: "calc(100vh - 65px)",
-        borderRadius: "10px",
-        border: "1px solid #E0E0E0",
+        borderRadius: "10px 10px 0 0",
+        border: `1px solid ${ColorsBase.gray400}`,
         overflow: "hidden",
         backgroundColor: ColorsBase.green25,
         zIndex: 1,

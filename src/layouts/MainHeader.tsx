@@ -4,31 +4,101 @@ import React from "react";
 import Link from "next/link";
 import Avatar from "../assets/avatar.png";
 import Image from "next/image";
+import { Box, Button, Menu, MenuItem, Typography } from "@mui/material";
+import { ColorsBase } from "@/theme/colorBase";
+
 const MainHeader = () => {
+  const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
+  const isMenuOpen = Boolean(anchorEl);
+
+  const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const menuId = "menu-appbar";
+  const renderMenu = (
+    <Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{
+        vertical: "bottom",
+        horizontal: "right",
+      }}
+      id={menuId}
+      keepMounted
+      transformOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      open={isMenuOpen}
+      onClose={handleMenuClose}
+    >
+      <MenuItem onClick={handleMenuClose} sx={{ mx: 1 }}>
+        <Link href="/dashboard">Dashboard</Link>
+      </MenuItem>
+    </Menu>
+  );
+
   return (
-    <div className="px-3 py-2 custom-shadow z-[10] bg-white dark:bg-slate-800">
-      <div className="flex items-center justify-between h-full gap-2 mx-auto max-w-7xl">
-        <Link href="/" className="flex items-center">
-          <p className="rounded-lg border-2 border-b-4 border-r-4 border-black px-2 py-1 text-xl font-bold transition-all hover:-translate-y-[2px] md:block dark:border-white dark:text-white">
+    <Box
+      sx={{
+        px: 3,
+        py: 2,
+        boxShadow: 3,
+        bgcolor: ColorsBase.gray900,
+      }}
+    >
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <Link href="/">
+          <Typography
+            variant="h6"
+            component="p"
+            sx={{
+              borderRadius: 2,
+              border: "2px solid",
+              borderBottomWidth: "4px",
+              borderRightWidth: "4px",
+              borderColor: ColorsBase.white,
+              px: 2,
+              py: 1,
+              fontWeight: "bold",
+              transition: "transform 0.2s",
+              "&:hover": {
+                transform: "translateY(-2px)",
+              },
+              display: { xs: "none", md: "block" },
+              color: ColorsBase.white,
+            }}
+          >
             Task Management
-          </p>
+          </Typography>
         </Link>
-        <div className="flex align-middle float-right gap-2">
-          <div className="relative inline-block text-left ">
-            <button className="flex w-full justify-center items-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-md font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 dark:bg-slate-800 dark:text-white">
-              <Image
-                src={Avatar}
-                alt="Avatar"
-                width={40}
-                height={40}
-                className="inline-block rounded-full ring-2 ring-white mr-3"
-                priority
-              />
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+        <Button onClick={handleProfileMenuOpen}>
+          <Box
+            sx={{
+              display: "inline-block",
+              borderRadius: "50%",
+              border: "2px solid white",
+              overflow: "hidden",
+              width: 45,
+              height: 45,
+            }}
+          >
+            <Image src={Avatar} alt="Avatar" width={40} height={40} priority />
+          </Box>
+        </Button>
+        {renderMenu}
+      </Box>
+    </Box>
   );
 };
 

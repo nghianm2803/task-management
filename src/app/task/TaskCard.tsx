@@ -43,7 +43,7 @@ const TaskCard: React.FC<{ task: ITask }> = ({ task }) => {
             position: "relative",
             overflow: "hidden",
             marginBottom: "10px",
-            borderBottom: `2px solid ${getPriorityColor(
+            borderBottom: `3px solid ${getPriorityColor(
               task.priority ?? TaskPriority.LOW
             )}`,
             backgroundColor: isHovered ? ColorsBase.green25 : ColorsBase.white,
