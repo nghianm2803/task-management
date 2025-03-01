@@ -19,7 +19,6 @@ const Dashboard = () => {
       >
         Company Dashboard
       </Typography>
-      zzz
       <Select
         value={selectedChart}
         onChange={(e) => setSelectedChart(e.target.value)}
