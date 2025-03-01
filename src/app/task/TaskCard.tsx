@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Typography, Box, Card, Avatar, Stack } from "@mui/material";
 import { fDate } from "../../utils/formatTime";
 import TaskDetail from "./TaskDetail";
 import { ITask, TaskPriority } from "@/interface/task.model";
 import { ColorsBase } from "@/theme/colorBase";
 import { getPriorityColor } from "@/utils/helper";
+import { useDrag } from "react-dnd";
 
 const TaskCard: React.FC<{
   task: ITask;
@@ -16,9 +17,21 @@ const TaskCard: React.FC<{
   const handleHover = () => setIsHovered(true);
   const handleLeave = () => setIsHovered(false);
 
+  const ref = useRef(null);
+
+  const [{ isDragging }, drag] = useDrag({
+    type: "TASK",
+    item: { ...task },
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
+  });
+
+  drag(ref);
+
   return (
     <>
-      <Box sx={{ display: "flex", flexDirection: "column" }}>
+      <Box ref={ref} sx={{ display: "flex", flexDirection: "column" }}>
         <Card
           sx={{
             p: 1,
@@ -31,6 +44,8 @@ const TaskCard: React.FC<{
             borderBottom: `3px solid ${getPriorityColor(
               task.priority ?? TaskPriority.LOW
             )}`,
+            opacity: isDragging ? 0.5 : 1,
+            cursor: isDragging ? "grabbing" : "grab",
             backgroundColor: isHovered ? ColorsBase.green25 : ColorsBase.white,
           }}
           onMouseEnter={handleHover}

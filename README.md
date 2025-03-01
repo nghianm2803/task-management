@@ -24,6 +24,7 @@ Tasks:
 - Users can view all tasks
 - Users can view a single task with its status (Todo, In progress, Done)
 - Users can create, update or delete a specific task
+- Users can drop and drag to quick update task's status
 - Users can assign task to a specific user
 - Users can search task by name
 - Users can filter task by priority (Low, Medium, High)
@@ -38,5 +39,5 @@ Dashboard:
 <p align="center">
     Built with Typescript - hosting by Vercel.
     <br />
-    <a href="https://task-management-ten-gamma.vercel.app/">View Demo</a>
+    <a href="https://task-management-eight-pi.vercel.app/">View Demo</a>
 </p>
